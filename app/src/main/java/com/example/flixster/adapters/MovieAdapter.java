@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import com.bumptech.glide.Glide;
 import android.util.Log;
+import com.bumptech.glide.request.target.Target;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -88,7 +89,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
                 }
 
-                Glide.with(context).load(imageUrl).into(ivPoster);
+                Glide.with(context).load(imageUrl).override(1000, Target.SIZE_ORIGINAL).placeholder(R.mipmap.placeholder).into(ivPoster);
             }
         }
 
