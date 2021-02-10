@@ -5,17 +5,23 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.flixster.DetailActivity;
 import com.example.flixster.models.Movie;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
+import org.parceler.Parcels;
 import com.bumptech.glide.Glide;
 import android.util.Log;
 import com.bumptech.glide.request.target.Target;
+import android.widget.RelativeLayout;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
+
 import com.example.flixster.R;
 import java.util.List;
 
@@ -58,6 +64,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
         public class ViewHolder extends RecyclerView.ViewHolder{
 
+        RelativeLayout container;
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
@@ -67,6 +74,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            container = itemView.findViewById(R.id.container);
+
         }
 
             public void bind(Movie movie) {
@@ -90,7 +99,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 }
 
                 Glide.with(context).load(imageUrl).override(1000, Target.SIZE_ORIGINAL).placeholder(R.mipmap.placeholder).into(ivPoster);
+
+                // 1. Register click listener on whole row
+                container.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v){
+
+                        // 2. Navigate to new activity on tap
+                        Intent i = new Intent(context, DetailActivity.class);
+                        i.putExtra("movie", Parcels.wrap(movie));
+                        context.startActivity(i);
+
+                    }
+
+                });
+
             }
+
         }
 
 }
